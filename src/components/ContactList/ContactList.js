@@ -3,6 +3,9 @@ import React from 'react';
 import { getStatusContacts, getStatusFilter } from 'redux/selectors';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeContactAction } from 'redux/contactsSlice';
+import { fetchTasks } from 'redux/operations';
+
+import { useEffect } from 'react';
 
 export const ContactList = () => {
   const dispatch = useDispatch();
@@ -16,10 +19,16 @@ export const ContactList = () => {
       contact.name.toLowerCase().includes(tmp.toLowerCase())
     );
   };
-
   const handleDelete = id => {
     dispatch(removeContactAction(id));
   };
+
+  // Otrzymujemy części stanu
+  const { items, isLoading, error } = useSelector(getStatusContacts);
+  // Wywołujemy operację
+  useEffect(() => {
+    dispatch(fetchTasks());
+  }, [dispatch]);
 
   const contactsToPreview = getFilteredContacts();
   return (
@@ -27,7 +36,7 @@ export const ContactList = () => {
       {contactsToPreview.map(elem => (
         <li className={css.list__elem} key={elem.id}>
           <span className={css.name}>{elem.name}</span>
-          <span className={css.number}>{elem.number}</span>
+          <span className={css.number}>{elem.phone}</span>
           <button
             className={css.button}
             type="Button"
