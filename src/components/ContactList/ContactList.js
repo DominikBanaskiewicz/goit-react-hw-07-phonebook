@@ -1,6 +1,6 @@
 import css from './ContactList.module.css';
 import React from 'react';
-import { selectVisibleContacts, inOutId } from 'redux/selectors';
+import { selectVisibleContacts } from 'redux/selectors';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteContact } from 'redux/operations';
 
